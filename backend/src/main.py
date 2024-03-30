@@ -35,15 +35,15 @@ def get_weather(city: str):
     return json_data
 
 
-app = FastAPI()
+app = FastAPI(root_path="/api")
 
 
 @app.get("/", include_in_schema=False)
 async def docs_redirect():
-    return RedirectResponse(url="/docs")
+    return RedirectResponse(url="/api/docs")
 
 
-@app.get("/weather/{city}")
+@app.get("/weather/{city}", operation_id="get_weather")
 async def weather_endpoint_get(city: str):
     return get_weather(city=city)
 
