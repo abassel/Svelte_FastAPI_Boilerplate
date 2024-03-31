@@ -3,36 +3,17 @@
 
     import {forecast, fake_data, temp_unit} from './store.js'
 
-    import CloudyIcon from './components/svg/CloudyIcon.svelte';
     import CloudRainIcon from './components/svg/CloudRainIcon.svelte';
     import SunriseIcon from './components/svg/SunriseIcon.svelte';
     import SunsetIcon from './components/svg/SunsetIcon.svelte';
     import WindIcon from './components/svg/WindIcon.svelte';
 
-    let todo;
-
     (async () => {
-        // window.api = new OpenAPIClientAxios({definition: '/api/openapi.json'});
-        // await window.api.init();
-        // window.client_api = await window.api.getClient();
-        // let res = await window.client_api.get_weather("orlando");
-        // console.log(res);
-        console.log(fake_data);
-        $forecast =
-            // ...res.data,
-            fake_data;  // For debug
-
+        // $forecast = fake_data;  // For debug without backend -> npm run dev
+        const api = new OpenAPIClientAxios({definition: '/api/openapi.json'});
+        window.client_api = await api.getClient();
+        console.log("OpenApi client is ready!");
     })();
-
-    // async function deleteTodo(id) {
-    //     let res = await window.client_api.todo_delete_id(id);
-    //     if (res.status === 200) {
-    //         $todos = $todos.filter(item => item._id.$oid !== res.data._id.$oid);
-    //         console.log($todos);
-    //     } else {
-    //         console.log(res);
-    //     }
-    // }
 
     function padZero(number) {
         return (number < 10 ? '0' : '') + number;
@@ -124,33 +105,3 @@
 
 </main>
 
-
-<!--<style>-->
-
-<!--    .row {-->
-<!--        padding-top: 1rem;-->
-<!--        display: flex;-->
-<!--        justify-content: space-evenly;-->
-<!--    }-->
-
-<!--    #profile {-->
-<!--        margin-right: -20px;-->
-<!--        border-radius: 50%;-->
-<!--        box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);-->
-<!--        border: 2px solid rgba(255, 255, 255, 1);-->
-<!--    }-->
-
-<!--    .bottom {-->
-<!--        position: absolute;-->
-<!--        bottom: 1%;-->
-<!--        left: 50%;-->
-<!--        -webkit-transform: translate(-50%, 0%);-->
-<!--        transform: translate(-50%, 0%);-->
-<!--    }-->
-
-<!--    .custom-btn {-->
-<!--        margin-top: 10px;-->
-<!--        margin-left: 10px;-->
-<!--    }-->
-
-<!--</style>-->
