@@ -1,21 +1,27 @@
 <script>
     import OpenAPIClientAxios from 'openapi-client-axios';
-    // import Todo from './components/Todo.svelte';
-    // import Form from './components/Form.svelte'
-    import {todos} from './store.js'
+
+    import {forecast, fake_data} from './store.js'
+
+    import CloudyIcon from './components/svg/CloudyIcon.svelte';
+    import CloudRainIcon from './components/svg/CloudRainIcon.svelte';
+    import SunriseIcon from './components/svg/SunriseIcon.svelte';
+    import SunsetIcon from './components/svg/SunsetIcon.svelte';
+    import WindIcon from './components/svg/WindIcon.svelte';
 
     let todo;
 
     (async () => {
-        window.api = new OpenAPIClientAxios({definition: '/api/openapi.json'});
-        await window.api.init();
-        window.client_api = await window.api.getClient();
-        let res = await window.client_api.todo_read();
-        console.log(res);
-        $todos = [
-            ...res.data,
-            // ...fake_data, // For debug
-        ];
+        // window.api = new OpenAPIClientAxios({definition: '/api/openapi.json'});
+        // await window.api.init();
+        // window.client_api = await window.api.getClient();
+        // let res = await window.client_api.get_weather("orlando");
+        // console.log(res);
+        console.log(fake_data);
+        $forecast =
+            // ...res.data,
+            fake_data;  // For debug
+
     })();
 
     // async function deleteTodo(id) {
@@ -28,89 +34,86 @@
     //     }
     // }
 
+
 </script>
 
 <main>
 
-    <!-- remove from here -->
-
-<!--        <a target="_blank" href="https://github.com/abassel/Flask_RestGlue_Svelte_Docker">-->
-<!--            <img style="position: absolute; top: 0; right: 0; border: 0; z-index:100;"-->
-<!--                 src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"-->
-<!--                 alt="Fork me on GitHub">-->
-<!--        </a>-->
-
-        <a class="bottom" target="_blank" href="https://github.com/abassel">
-            <img id="profile" src="https://github.com/abassel.png?size=40">
-            <p style="margin-bottom: 0; margin-top: -5px;"><small>hire me</small></p>
-        </a>
-
-    <!-- to here, in order to reuse -->
-
-    <div style="display: flex">
-
-<!--        <Form/>-->
-
-        <button onclick="window.open('/api/docs','_blank');"  class="btn btn-primary custom-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear"
-                 viewBox="0 0 16 16">
-                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
-                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
-            </svg>
-            swagger api
-        </button>
-
-        <button onclick="window.open('/api/redoc','_blank');"  class="btn btn-primary custom-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear"
-                 viewBox="0 0 16 16">
-                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
-                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
-            </svg>
-            rdoc api
-        </button>
-    </div>
-
-    <div class="container">
-        <div class="row m-auto">
-
-            <!--{#each $todos as todo (todo._id.$oid)}-->
-            <!--    <Todo title={todo.title}-->
-            <!--          description={todo.description}-->
-            <!--          delete_func={() => deleteTodo(todo._id.$oid)}-->
-            <!--    />-->
-            <!--{/each}-->
-
+    <div class="text-white min-vh-100 p-5">
+        <div class="text-center">
+            <h1 class="display-4 font-weight-bold">London, UK</h1>
+            <p class="h2">Sunday 4th August</p>
+        </div>
+        <div class="d-flex justify-content-center align-items-center my-4">
+            <CloudyIcon class="text-primary" />
+            <span class="font-weight-bold display-1">21°</span>
+            <div class="text-right">
+                <p class="h4 font-weight-bold">Mostly Sunny</p>
+                <p class="h2">
+                    High <span class="font-weight-bold">23°</span>
+                </p>
+                <p class="h2">
+                    Low <span class="font-weight-bold">14°</span>
+                </p>
+            </div>
+        </div>
+        <div class="my-4">
+            <h2 class="h4 text-center font-weight-bold mb-3">Today's stats</h2>
+            <div class="row row-cols-4 gap-4" />
+        </div>
+        <div class="d-flex justify-content-around my-4">
+            <div class="text-center">
+                <WindIcon class="display-4 mb-2" />
+                <p class="h2 font-weight-bold">7mph</p>
+                <p>Wind</p>
+            </div>
+            <div class="text-center">
+                <CloudRainIcon class="display-4 mb-2" />
+                <p class="h2 font-weight-bold">0%</p>
+                <p>Rain</p>
+            </div>
+            <div class="text-center">
+                <SunriseIcon class="display-4 mb-2" />
+                <p class="h2 font-weight-bold">05:27</p>
+                <p>Sunrise</p>
+            </div>
+            <div class="text-center">
+                <SunsetIcon class="display-4 mb-2" />
+                <p class="h2 font-weight-bold">20:57</p>
+                <p>Sunset</p>
+            </div>
         </div>
     </div>
 
 </main>
 
-<style>
 
-    .row {
-        padding-top: 1rem;
-        display: flex;
-        justify-content: space-evenly;
-    }
+<!--<style>-->
 
-    #profile {
-        margin-right: -20px;
-        border-radius: 50%;
-        box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
-        border: 2px solid rgba(255, 255, 255, 1);
-    }
+<!--    .row {-->
+<!--        padding-top: 1rem;-->
+<!--        display: flex;-->
+<!--        justify-content: space-evenly;-->
+<!--    }-->
 
-    .bottom {
-        position: absolute;
-        bottom: 1%;
-        left: 50%;
-        -webkit-transform: translate(-50%, 0%);
-        transform: translate(-50%, 0%);
-    }
+<!--    #profile {-->
+<!--        margin-right: -20px;-->
+<!--        border-radius: 50%;-->
+<!--        box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);-->
+<!--        border: 2px solid rgba(255, 255, 255, 1);-->
+<!--    }-->
 
-    .custom-btn {
-        margin-top: 10px;
-        margin-left: 10px;
-    }
+<!--    .bottom {-->
+<!--        position: absolute;-->
+<!--        bottom: 1%;-->
+<!--        left: 50%;-->
+<!--        -webkit-transform: translate(-50%, 0%);-->
+<!--        transform: translate(-50%, 0%);-->
+<!--    }-->
 
-</style>
+<!--    .custom-btn {-->
+<!--        margin-top: 10px;-->
+<!--        margin-left: 10px;-->
+<!--    }-->
+
+<!--</style>-->
