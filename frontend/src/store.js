@@ -3,7 +3,9 @@
 
 import {writable} from 'svelte/store'
 
-export const forecast = writable([]);
+export const forecast = writable(null);
+
+export const temp_unit = writable("F");
 
 export const fake_data = {
     "coord": {

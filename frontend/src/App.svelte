@@ -1,7 +1,7 @@
 <script>
     import OpenAPIClientAxios from 'openapi-client-axios';
 
-    import {forecast, fake_data} from './store.js'
+    import {forecast, fake_data, temp_unit} from './store.js'
 
     import CloudyIcon from './components/svg/CloudyIcon.svelte';
     import CloudRainIcon from './components/svg/CloudRainIcon.svelte';
@@ -34,6 +34,42 @@
     //     }
     // }
 
+    function padZero(number) {
+        return (number < 10 ? '0' : '') + number;
+    }
+
+    export const convertTemp = (temp) => {
+        let toUnit = $temp_unit;
+        switch (toUnit) {
+            case "C":
+                return (temp - 273.15).toFixed(1);
+            case "F":
+                return ((temp - 273.15) * (9 / 5) + 32).toFixed(1);
+            default:
+                throw new Error("Invalid value stored in temp");
+        }
+    };
+
+    export const get_time = (unix_timestamp, timeZoneOffset) => {
+
+        // var timeZoneOffset is the offset in seconds (e.g., -14400 for UTC-4)
+
+        // Convert the timestamp to milliseconds
+        var timestampMilliseconds = unix_timestamp * 1000;
+
+        // Create a new Date object with the adjusted time based on the offset
+        var date = new Date(timestampMilliseconds + timeZoneOffset * 1000);
+
+        // Extract the hour and minute components from the adjusted date
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+
+        // Format the adjusted time as a string
+        var adjustedTime = padZero(hours) + ':' + padZero(minutes);
+
+        return adjustedTime;
+    }
+
 
 </script>
 
@@ -41,19 +77,19 @@
 
     <div class="text-white min-vh-100 p-5">
         <div class="text-center">
-            <h1 class="display-4 font-weight-bold">London, UK</h1>
-            <p class="h2">Sunday 4th August</p>
+            <h1 class="display-4 font-weight-bold">{$forecast.name}</h1>
+<!--            <p class="h2">Sunday 4th August</p>-->
         </div>
         <div class="d-flex justify-content-center align-items-center my-4">
             <CloudyIcon class="text-primary" />
-            <span class="font-weight-bold display-1">21°</span>
+            <span class="font-weight-bold display-1">{convertTemp($forecast.main.temp)}°</span>
             <div class="text-right">
-                <p class="h4 font-weight-bold">Mostly Sunny</p>
-                <p class="h2">
-                    High <span class="font-weight-bold">23°</span>
+                <p class="h4 font-weight-bold">{$forecast.weather[0].description}</p>
+                <p class="h3">
+                    High <span class="font-weight-bold">{convertTemp($forecast.main.temp_max)}°</span>
                 </p>
-                <p class="h2">
-                    Low <span class="font-weight-bold">14°</span>
+                <p class="h3">
+                    Low <span class="font-weight-bold">{convertTemp($forecast.main.temp_min)}°</span>
                 </p>
             </div>
         </div>
@@ -64,22 +100,23 @@
         <div class="d-flex justify-content-around my-4">
             <div class="text-center">
                 <WindIcon class="display-4 mb-2" />
-                <p class="h2 font-weight-bold">7mph</p>
+                <p class="h2 font-weight-bold">{$forecast.wind.speed.toFixed(1)}mph</p>
                 <p>Wind</p>
             </div>
-            <div class="text-center">
-                <CloudRainIcon class="display-4 mb-2" />
-                <p class="h2 font-weight-bold">0%</p>
-                <p>Rain</p>
-            </div>
+<!--            TODO: Need to explore more the api to extract this information-->
+<!--            <div class="text-center">-->
+<!--                <CloudRainIcon class="display-4 mb-2" />-->
+<!--                <p class="h2 font-weight-bold">0%</p>-->
+<!--                <p>Rain</p>-->
+<!--            </div>-->
             <div class="text-center">
                 <SunriseIcon class="display-4 mb-2" />
-                <p class="h2 font-weight-bold">05:27</p>
+                <p class="h2 font-weight-bold">{get_time($forecast.sys.sunrise, $forecast.timezone)}</p>
                 <p>Sunrise</p>
             </div>
             <div class="text-center">
                 <SunsetIcon class="display-4 mb-2" />
-                <p class="h2 font-weight-bold">20:57</p>
+                <p class="h2 font-weight-bold">{get_time($forecast.sys.sunset, $forecast.timezone)}</p>
                 <p>Sunset</p>
             </div>
         </div>
