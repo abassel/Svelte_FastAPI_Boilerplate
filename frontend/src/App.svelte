@@ -1,13 +1,12 @@
 <script>
     import OpenAPIClientAxios from 'openapi-client-axios';
 
-    import {forecast, fake_data, temp_unit} from './store.js'
-
-    import CloudRainIcon from './components/svg/CloudRainIcon.svelte';
+    import {forecast} from './store.js'
     import SunriseIcon from './components/svg/SunriseIcon.svelte';
     import SunsetIcon from './components/svg/SunsetIcon.svelte';
     import WindIcon from './components/svg/WindIcon.svelte';
     import CitySearch from "./components/CitySearch.svelte";
+    import {convertTemp, get_time} from "./utils";
 
     (async () => {
         // $forecast = fake_data;  // For debug without backend -> npm run dev
@@ -15,42 +14,6 @@
         window.client_api = await api.getClient();
         console.log("OpenApi client is ready!");
     })();
-
-    function padZero(number) {
-        return (number < 10 ? '0' : '') + number;
-    }
-
-    export const convertTemp = (temp) => {
-        let toUnit = $temp_unit;
-        switch (toUnit) {
-            case "C":
-                return (temp - 273.15).toFixed(1);
-            case "F":
-                return ((temp - 273.15) * (9 / 5) + 32).toFixed(1);
-            default:
-                throw new Error("Invalid value stored in temp");
-        }
-    };
-
-    export const get_time = (unix_timestamp, timeZoneOffset) => {
-
-        // var timeZoneOffset is the offset in seconds (e.g., -14400 for UTC-4)
-
-        // Convert the timestamp to milliseconds
-        var timestampMilliseconds = unix_timestamp * 1000;
-
-        // Create a new Date object with the adjusted time based on the offset
-        var date = new Date(timestampMilliseconds + timeZoneOffset * 1000);
-
-        // Extract the hour and minute components from the adjusted date
-        var hours = date.getHours();
-        var minutes = date.getMinutes();
-
-        // Format the adjusted time as a string
-        var adjustedTime = padZero(hours) + ':' + padZero(minutes);
-
-        return adjustedTime;
-    }
 
 
 </script>

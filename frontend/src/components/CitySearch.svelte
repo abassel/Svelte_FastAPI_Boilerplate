@@ -1,6 +1,6 @@
 <script>
     import Search from "svelte-search";
-    import {get_city_weather} from "../api";
+    import {get_city_weather} from "../utils";
 
     let value = "";
 </script>
