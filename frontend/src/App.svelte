@@ -106,7 +106,23 @@
                 </div>
             </div>
         {/if}
+        <div class="d-flex justify-content-center align-items-center my-4">
+
+            <button onclick="window.open('/api/docs','_blank');"  class="btn btn-primary custom-btn margin ">
+                swagger api
+            </button>
+
+            <button onclick="window.open('/api/redoc','_blank');"  class="btn btn-primary custom-btn margin ">
+                redoc api
+            </button>
+        </div>
     </div>
 
 </main>
 
+
+<style>
+    .margin {
+        margin: 10px;
+    }
+</style>
