@@ -4,10 +4,10 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
-<h1 align="center">OliveWeather</h1>
+<h1 align="center">Weather</h1>
 
   <p align="center">
-    A weather app that caches its data from the OpenWeatherMap API
+    A weather app that caches its data from the OpenWeatherMap API(uses Svelte and FastAPI)
     <br />
 
   </p>
