@@ -9,10 +9,10 @@
 
 # docker system prune --all --force                                                  # Docker clearup
 
-# Refrence
+# Reference
 # https://github.com/zupzup/multi-stage-docker-react/blob/main/Dockerfile
 
-FROM node:latest as builder
+FROM node:22-bullseye-slim as builder
 
 WORKDIR /opt/front
 COPY package.json package-lock.json /opt/front/
@@ -26,7 +26,7 @@ RUN npm run build
 FROM nginx:stable-alpine
 
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=builder /opt/front/public /usr/share/nginx/html
+COPY --from=builder /opt/front/dist /usr/share/nginx/html
 EXPOSE 80
 
 #RUN chown nginx.nginx /usr/share/nginx/html/ -R
