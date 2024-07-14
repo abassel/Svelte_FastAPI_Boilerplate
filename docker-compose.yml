@@ -2,7 +2,6 @@
 
 # docker compose up --build
 
-version: '3.9'
 
 services:
   backend:
@@ -29,4 +28,10 @@ services:
     depends_on:
       - backend
     stdin_open: true
-
+    develop:
+      watch:
+        - action: rebuild
+          path: frontend
+#          target: /src/web
+          ignore:
+            - ./frontend/node_modules/
